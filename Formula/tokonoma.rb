@@ -18,11 +18,11 @@ class Tokonoma < Formula
 
   on_macos do
     on_arm do
-      url "https://github.com/tokonoma-ai/tokonoma-mcp/releases/download/v0.6.0/tokonoma-darwin-arm64.tar.gz"
+      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.6.0/tokonoma-darwin-arm64.tar.gz"
       sha256 "3816b0a648d86113c5efa2cf6f6e79a217534df9fb938c55201e6bc52421c1ab"
     end
     on_intel do
-      url "https://github.com/tokonoma-ai/tokonoma-mcp/releases/download/v0.6.0/tokonoma-darwin-amd64.tar.gz"
+      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.6.0/tokonoma-darwin-amd64.tar.gz"
       sha256 "6eb87b1c32c26b834f27c5ed3eb64bf5370832359caf47da93f032d06d4aa798"
     end
   end
