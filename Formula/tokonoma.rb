@@ -1,10 +1,11 @@
 # typed: false
 # frozen_string_literal: true
 
-# Formula/tokonoma.rb — the canonical formula source. The release workflow
-# overwrites `version` and the per-arch `url`/`sha256` triples and commits the
-# result to tokonoma-ai/homebrew-tap. Local builds use file:// URLs via the
-# build-local helper.
+# Formula/tokonoma.rb — canonical formula source. The release workflow
+# (.github/workflows/release-please.yaml, bump-tap-formula job) copies this
+# whole file to tokonoma-ai/homebrew-tap/Formula/tokonoma.rb on each release,
+# substituting `version` + per-arch `url`/`sha256` via
+# packaging/brew/bump_formula.py. Edit this file — not the tap copy.
 class Tokonoma < Formula
   desc "Local trial of toko-mcp — MCP server for memory and runbook skills"
   homepage "https://tokonoma.ai"
@@ -14,7 +15,7 @@ class Tokonoma < Formula
   depends_on :macos
   depends_on "ollama"
   depends_on "pgvector"
-  depends_on "postgresql@16"
+  depends_on "postgresql@18"
 
   on_macos do
     on_arm do
@@ -28,17 +29,13 @@ class Tokonoma < Formula
   end
 
   def install
-    # Release tarball layout:
-    #   tokonoma-mcp/        # PyInstaller --onedir bundle (binary + libs)
-    #   supervisor.sh
-    #   tokonoma-reset
     libexec.install "tokonoma-mcp"
     libexec.install "supervisor.sh"
     bin.install "tokonoma-reset"
   end
 
   service do
-    run [opt_libexec/"supervisor.sh", opt_libexec/"tokonoma-mcp/tokonoma-mcp"]
+    run [opt_libexec/"supervisor.sh", opt_libexec/"tokonoma-mcp"]
     keep_alive false
     working_dir HOMEBREW_PREFIX
     log_path var/"log/tokonoma.log"
@@ -79,17 +76,16 @@ class Tokonoma < Formula
   end
 
   test do
-    require "open3"
     port = free_port
     env = {
       "PORT"             => port.to_s,
       "HOST"             => "127.0.0.1",
       "TOKO_MCP_LOG_DIR" => testpath.to_s,
     }
-    pid = spawn(env, libexec/"tokonoma-mcp/tokonoma-mcp")
+    pid = spawn(env, libexec/"tokonoma-mcp")
     begin
-      # The PyInstaller onedir bundle takes ~1s to start; give it a bit more.
-      sleep 5
+      # First-launch self-extraction is ~4 s; give it a comfortable margin.
+      sleep 10
       assert_match "ok", shell_output("curl -fs http://127.0.0.1:#{port}/health")
     ensure
       Process.kill("TERM", pid)
