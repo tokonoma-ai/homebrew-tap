@@ -47,9 +47,6 @@ class Tokonoma < Formula
       tokonoma is installed. To start it:
         brew services start tokonoma
 
-      First start takes ~30 s (postgres bootstrap + ollama embedding-model pull).
-      Subsequent starts are near-instant.
-
       MCP endpoint: http://127.0.0.1:8000/mcp
 
       Wire it into Claude Code:
