@@ -9,7 +9,7 @@
 class Tokonoma < Formula
   desc "Local trial of toko-mcp — MCP server for memory and runbook skills"
   homepage "https://tokonoma.ai"
-  version "0.9.1"
+  version "0.9.2"
   license "Proprietary"
 
   depends_on :macos
@@ -19,12 +19,12 @@ class Tokonoma < Formula
 
   on_macos do
     on_arm do
-      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.9.1/tokonoma-darwin-arm64.tar.gz"
-      sha256 "ea49efe2188147388bdd600d2f726d8d777b802b654667f8ff9529615d732df5"
+      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.9.2/tokonoma-darwin-arm64.tar.gz"
+      sha256 "904385d4cf1f269cfcc533a65fe89795a2a1078c9296bfc460c0f7179fac6fbd"
     end
     on_intel do
-      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.9.1/tokonoma-darwin-amd64.tar.gz"
-      sha256 "f74e76d072a8922a7436449b2a9cc9229131fec9951e2cfd039e1059a4359202"
+      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.9.2/tokonoma-darwin-amd64.tar.gz"
+      sha256 "4fa779aaefbeb492df136f79a320361ff0e0ace93f5de5469b6ee7f7dcab46c9"
     end
   end
 
@@ -47,23 +47,42 @@ class Tokonoma < Formula
       tokonoma is installed. To start it:
         brew services start tokonoma
 
-      MCP endpoint: http://127.0.0.1:8000/mcp
+      MCP endpoint: http://127.0.0.1:8765/mcp
 
       Wire it into Claude Code:
-        claude mcp add --transport http tokonoma http://127.0.0.1:8000/mcp
+        claude mcp add --transport http tokonoma http://127.0.0.1:8765/mcp
+
+      Wire it into Claude Desktop — Settings → Developer → Edit Config
+      opens ~/Library/Application Support/Claude/claude_desktop_config.json.
+      Claude Desktop speaks stdio only, so route HTTP through mcp-remote
+      (requires Node.js). Restart Claude Desktop after saving:
+        {
+          "mcpServers": {
+            "tokonoma": {
+              "command": "npx",
+              "args": [
+                "-y",
+                "mcp-remote",
+                "http://127.0.0.1:8765/mcp",
+                "--transport",
+                "http-only"
+              ]
+            }
+          }
+        }
 
       Wire it into Cursor — add to ~/.cursor/mcp.json:
         {
           "mcpServers": {
             "tokonoma": {
-              "url": "http://127.0.0.1:8000/mcp"
+              "url": "http://127.0.0.1:8765/mcp"
             }
           }
         }
 
       Wire it into Codex CLI — add to ~/.codex/config.toml:
         [mcp_servers.tokonoma]
-        url = "http://127.0.0.1:8000/mcp"
+        url = "http://127.0.0.1:8765/mcp"
 
       To stop:                          brew services stop tokonoma
       To reset (drop DB + model):       tokonoma-reset
