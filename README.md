@@ -51,10 +51,12 @@ url = "http://127.0.0.1:8000/mcp"
 ## Uninstall
 
 ```bash
-tokonoma-reset           # drop the DB, ollama model, ~/.tokonoma/
-brew services stop tokonoma
-brew uninstall tokonoma
-brew untap tokonoma-ai/tap
+tokonoma-reset             # drop DB, role, ollama model, ~/.tokonoma
+brew uninstall tokonoma    # also auto-removes ollama, postgresql@18,
+                           # and pgvector if nothing else needs them
+brew autoremove            # only if the deps above didn't get removed
+                           # (e.g. HOMEBREW_NO_AUTOREMOVE is set)
+brew untap tokonoma-ai/tap # optional
 ```
 
-`postgresql@18` and `ollama` are not uninstalled — they may be in use by other tools.
+Run `tokonoma-reset` *before* `brew uninstall tokonoma` — the reset script ships inside the formula, so uninstalling first removes it. Modern Homebrew (5.x) runs `brew autoremove` automatically as part of `brew uninstall`, which is why the heavy deps come off in one step; the explicit `brew autoremove` line is the fallback for users with `HOMEBREW_NO_AUTOREMOVE` set. Anything you separately ran `brew install` on (e.g. your own `ollama` install) is left alone.
