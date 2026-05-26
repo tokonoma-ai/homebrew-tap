@@ -9,7 +9,7 @@
 class Tokonoma < Formula
   desc "Local trial of toko-mcp — MCP server for memory and runbook skills"
   homepage "https://tokonoma.ai"
-  version "0.10.0"
+  version "0.11.0"
   license "Proprietary"
 
   depends_on :macos
@@ -19,12 +19,12 @@ class Tokonoma < Formula
 
   on_macos do
     on_arm do
-      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.10.0/tokonoma-darwin-arm64.tar.gz"
-      sha256 "18b59adfd5cccd1251fb255742c3161797c365f3992b7946d0d0df0574a9f091"
+      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.11.0/tokonoma-darwin-arm64.tar.gz"
+      sha256 "19d5a32fab8a9900c2145f087edd47c9ec326d359a9f2ffee940d20991fe24e4"
     end
     on_intel do
-      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.10.0/tokonoma-darwin-amd64.tar.gz"
-      sha256 "e4a961c220ee629a0b4b6ad3c2af40d5943ecc5b40155a48193a1af267f82f04"
+      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.11.0/tokonoma-darwin-amd64.tar.gz"
+      sha256 "3328b5e1c015f929fd70da71de305dc6cc9e5d340d0b92100a606fa92c03f24b"
     end
   end
 
@@ -86,6 +86,13 @@ class Tokonoma < Formula
 
       To stop:                          brew services stop tokonoma
       To reset (drop DB + model):       tokonoma-reset
+
+      To uninstall cleanly:
+        tokonoma-reset             # drop DB, role, ollama model, ~/.tokonoma
+        brew uninstall tokonoma    # also auto-removes ollama, postgresql@18,
+                                   # and pgvector if nothing else needs them
+        brew autoremove            # only if the deps above didn't get removed
+                                   # (e.g. HOMEBREW_NO_AUTOREMOVE is set)
 
       If it doesn't come up, check:
         ~/.tokonoma/supervisor.log      bootstrap + subprocess errors
