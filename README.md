@@ -9,14 +9,14 @@ brew install tokonoma-ai/tap/tokonoma
 brew services start tokonoma
 ```
 
-This installs `postgresql@18`, `pgvector`, and `ollama` via Homebrew, bootstraps the database and pulls the `nomic-embed-text` embedding model on first start, and exposes an MCP endpoint at `http://127.0.0.1:8000/mcp`.
+This installs `postgresql@18`, `pgvector`, and `ollama` via Homebrew, bootstraps the database and pulls the `nomic-embed-text` embedding model on first start, and exposes an MCP endpoint at `http://127.0.0.1:8765/mcp`.
 
 ### Wire it into your agent
 
 **Claude Code:**
 
 ```bash
-claude mcp add --transport http tokonoma http://127.0.0.1:8000/mcp
+claude mcp add --transport http tokonoma http://127.0.0.1:8765/mcp
 ```
 
 **Cursor** — add to `~/.cursor/mcp.json`:
@@ -25,7 +25,7 @@ claude mcp add --transport http tokonoma http://127.0.0.1:8000/mcp
 {
   "mcpServers": {
     "tokonoma": {
-      "url": "http://127.0.0.1:8000/mcp"
+      "url": "http://127.0.0.1:8765/mcp"
     }
   }
 }
@@ -35,7 +35,7 @@ claude mcp add --transport http tokonoma http://127.0.0.1:8000/mcp
 
 ```toml
 [mcp_servers.tokonoma]
-url = "http://127.0.0.1:8000/mcp"
+url = "http://127.0.0.1:8765/mcp"
 ```
 
 ## Formulas
