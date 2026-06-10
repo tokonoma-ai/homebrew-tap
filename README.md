@@ -19,6 +19,25 @@ This installs `postgresql@18`, `pgvector`, and `ollama` via Homebrew, bootstraps
 claude mcp add --transport http tokonoma http://127.0.0.1:8765/mcp
 ```
 
+**Claude Desktop** — Settings → Developer → Edit Config opens `~/Library/Application Support/Claude/claude_desktop_config.json`. Claude Desktop speaks stdio only, so route HTTP through [mcp-remote](https://www.npmjs.com/package/mcp-remote) (requires Node.js). Restart Claude Desktop after saving:
+
+```json
+{
+  "mcpServers": {
+    "tokonoma": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "http://127.0.0.1:8765/mcp",
+        "--transport",
+        "http-only"
+      ]
+    }
+  }
+}
+```
+
 **Cursor** — add to `~/.cursor/mcp.json`:
 
 ```json
