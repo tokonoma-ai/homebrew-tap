@@ -9,22 +9,28 @@
 class Tokonoma < Formula
   desc "Local trial of toko-mcp — MCP server for memory and runbook skills"
   homepage "https://tokonoma.ai"
-  version "0.16.0"
+  version "0.17.0"
   license "Proprietary"
 
   depends_on :macos
+  # llama.cpp supplies llama-server, which Homebrew's ollama bottle (0.30.x)
+  # omits — without it every GGUF request (including the embedding model)
+  # fails and memory search silently degrades to lexical-only. supervisor.sh
+  # bridges the binary into ollama's keg at each service start.
+  # See Homebrew/homebrew-core#285982, ollama/ollama#16535.
+  depends_on "llama.cpp"
   depends_on "ollama"
   depends_on "pgvector"
   depends_on "postgresql@18"
 
   on_macos do
     on_arm do
-      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.16.0/tokonoma-darwin-arm64.tar.gz"
-      sha256 "77c98e723c5cbd66dc84e3e1306f719af88fe95ad1965a8dbca791585a8ffa83"
+      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.17.0/tokonoma-darwin-arm64.tar.gz"
+      sha256 "96fa8160a3a6f1b19beb51835fbcb80b8a0bd10805134d88802b5d3ce5eeaf49"
     end
     on_intel do
-      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.16.0/tokonoma-darwin-amd64.tar.gz"
-      sha256 "8b79d0b68bf70baa0843eb6e5596fd20474acf29cbbbef6f8e70a1cd8d0d6819"
+      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.17.0/tokonoma-darwin-amd64.tar.gz"
+      sha256 "698183d4bc8a081f5d130ae69b8ceffbae6168994c8d8793fc71153126b7981d"
     end
   end
 
