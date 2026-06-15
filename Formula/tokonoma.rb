@@ -9,7 +9,7 @@
 class Tokonoma < Formula
   desc "Local trial of toko-mcp — MCP server for memory and runbook skills"
   homepage "https://tokonoma.ai"
-  version "0.19.0"
+  version "0.19.1"
   license "Proprietary"
 
   depends_on :macos
@@ -25,12 +25,12 @@ class Tokonoma < Formula
 
   on_macos do
     on_arm do
-      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.19.0/tokonoma-darwin-arm64.tar.gz"
-      sha256 "1b4eeb1c72f253a56027a8c792458546abbcb90dee549f0f1d6af1c972f21e86"
+      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.19.1/tokonoma-darwin-arm64.tar.gz"
+      sha256 "8817bdb5006d8b91174f730c4bab9e3610629a658cb7b987baaa6ec9a1ef6033"
     end
     on_intel do
-      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.19.0/tokonoma-darwin-amd64.tar.gz"
-      sha256 "f3e5133090a995019b151e6e1c5b5c805d02992a05b33a6966e3cd05f727a657"
+      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.19.1/tokonoma-darwin-amd64.tar.gz"
+      sha256 "760727e375132ec395c837f10dfbe425f2e7aea080ac93e537c48c47482e9c5a"
     end
   end
 
@@ -111,6 +111,9 @@ class Tokonoma < Formula
     env = {
       "PORT"             => port.to_s,
       "HOST"             => "127.0.0.1",
+      # No kubelet here — and a fixed livez port would collide across
+      # concurrent test runs even though PORT is a free_port.
+      "LIVEZ_PORT"       => "0",
       "TOKO_MCP_LOG_DIR" => testpath.to_s,
     }
     pid = spawn(env, libexec/"tokonoma-mcp")
