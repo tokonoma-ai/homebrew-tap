@@ -9,7 +9,7 @@
 class Tokonoma < Formula
   desc "Local trial of toko-mcp — MCP server for memory and runbook skills"
   homepage "https://tokonoma.ai"
-  version "0.19.1"
+  version "0.20.0"
   license "Proprietary"
 
   depends_on :macos
@@ -25,12 +25,12 @@ class Tokonoma < Formula
 
   on_macos do
     on_arm do
-      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.19.1/tokonoma-darwin-arm64.tar.gz"
-      sha256 "8817bdb5006d8b91174f730c4bab9e3610629a658cb7b987baaa6ec9a1ef6033"
+      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.20.0/tokonoma-darwin-arm64.tar.gz"
+      sha256 "4e90994e2aa63095523a6e649a15d5505239f4537f5b5ed6d1831a6e16b9e7be"
     end
     on_intel do
-      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.19.1/tokonoma-darwin-amd64.tar.gz"
-      sha256 "760727e375132ec395c837f10dfbe425f2e7aea080ac93e537c48c47482e9c5a"
+      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.20.0/tokonoma-darwin-amd64.tar.gz"
+      sha256 "cfc083406bb12bc78f76b224fac267497a5e92e21f3b038beee15f7bc5620771"
     end
   end
 
@@ -38,6 +38,11 @@ class Tokonoma < Formula
     libexec.install "tokonoma-mcp"
     libexec.install "supervisor.sh"
     bin.install "tokonoma-reset"
+    # Claude Code ambient-visibility helpers. Installed on PATH but NEVER
+    # wired into settings.json by the package; the onboard skill offers
+    # them as explicit, previewed opt-ins. See docs/session-receipts.md.
+    bin.install "tokonoma-receipt"
+    bin.install "tokonoma-statusline"
   end
 
   service do
@@ -90,6 +95,11 @@ class Tokonoma < Formula
         [mcp_servers.tokonoma]
         url = "http://127.0.0.1:8765/mcp"
 
+      Optional Claude Code extras: a Stop-hook session receipt
+      (tokonoma-receipt) and a terminal statusline ticker
+      (tokonoma-statusline) are on PATH but inactive. The onboard skill
+      offers them as explicit opt-ins; nothing is wired automatically.
+
       To stop:                          brew services stop tokonoma
       To reset (drop DB + model):       tokonoma-reset
 
@@ -99,6 +109,9 @@ class Tokonoma < Formula
                                    # and pgvector if nothing else needs them
         brew autoremove            # only if the deps above didn't get removed
                                    # (e.g. HOMEBREW_NO_AUTOREMOVE is set)
+      If you opted into the Claude Code hook or statusline, also remove
+      their entries from ~/.claude/settings.json (tokonoma-reset prints
+      the exact keys).
 
       If it doesn't come up, check:
         ~/.tokonoma/supervisor.log      bootstrap + subprocess errors
