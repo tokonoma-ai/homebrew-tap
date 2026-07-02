@@ -7,9 +7,9 @@
 # substituting `version` + per-arch `url`/`sha256` via
 # packaging/brew/bump_formula.py. Edit this file — not the tap copy.
 class Tokonoma < Formula
-  desc "Local trial of toko-mcp — MCP server for memory and runbook skills"
+  desc "Local trial of toko-mcp — MCP server for memory and procedure skills"
   homepage "https://tokonoma.ai"
-  version "0.23.1"
+  version "0.24.0"
   license "Proprietary"
 
   depends_on :macos
@@ -25,12 +25,12 @@ class Tokonoma < Formula
 
   on_macos do
     on_arm do
-      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.23.1/tokonoma-darwin-arm64.tar.gz"
-      sha256 "e65660854d0721bf8b0747c07f65415827f82302ec2400574cb70b96e506a62d"
+      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.24.0/tokonoma-darwin-arm64.tar.gz"
+      sha256 "290d0fc604471fd9ee95e127336629946dd26a979ae2eb48089ccc4fe43729e1"
     end
     on_intel do
-      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.23.1/tokonoma-darwin-amd64.tar.gz"
-      sha256 "ececf65ad3e5599f09f378481a24dc700b09636bae3da188f07b89a85ab05f74"
+      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.24.0/tokonoma-darwin-amd64.tar.gz"
+      sha256 "a11e389440dc8b5d99e60f8cb1815e5c1c48086ed28b08a39daa0a43db4116c4"
     end
   end
 
