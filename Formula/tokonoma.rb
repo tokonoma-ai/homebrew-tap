@@ -9,7 +9,7 @@
 class Tokonoma < Formula
   desc "Local trial of toko-mcp — MCP server for memory and procedure skills"
   homepage "https://tokonoma.ai"
-  version "0.25.3"
+  version "0.26.0"
   license "Proprietary"
 
   depends_on :macos
@@ -25,12 +25,12 @@ class Tokonoma < Formula
 
   on_macos do
     on_arm do
-      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.25.3/tokonoma-darwin-arm64.tar.gz"
-      sha256 "7e10c901bf16371476c1f12bed7e58731762a44fdcc52c271ac82a8117d300c9"
+      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.26.0/tokonoma-darwin-arm64.tar.gz"
+      sha256 "9a4144d556d766c12ff6212129bfe14056f8638daf0df12c05a89e730b91db76"
     end
     on_intel do
-      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.25.3/tokonoma-darwin-amd64.tar.gz"
-      sha256 "6c6daf32d0669cf175fb1e180fb89eb15de136c14474bb80ebd95660ce0e2e25"
+      url "https://github.com/tokonoma-ai/homebrew-tap/releases/download/v0.26.0/tokonoma-darwin-amd64.tar.gz"
+      sha256 "c82e5f429b669952fa44d0da49b55e78ce78f7affc1927a7eaf98941f0fe65d3"
     end
   end
 
